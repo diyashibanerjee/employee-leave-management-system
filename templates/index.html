@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+  <style>
+    body {
+      background: #f4f6f8;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background: #fff;
+      max-width: 400px;
+      margin: 60px auto 0 auto;
+      padding: 32px 28px 24px 28px;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .logo img {
+      max-width: 120px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      background: #fff;
+      padding: 6px;
+    }
+    h2 {
+      text-align: center;
+      color: #2d3a4b;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    input[type="text"], input[type="password"] {
+      padding: 12px;
+      border: 1px solid #d1d9e6;
+      border-radius: 6px;
+      font-size: 16px;
+      background: #f7f9fb;
+      transition: border 0.2s;
+    }
+    input[type="text"]:focus, input[type="password"]:focus {
+      border: 1.5px solid #4a90e2;
+      outline: none;
+      background: #fff;
+    }
+    button {
+      padding: 12px;
+      background: linear-gradient(90deg, #4a90e2 0%, #357ab8 100%);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #357ab8 0%, #4a90e2 100%);
+    }
+    p {
+      text-align: center;
+      margin-top: 18px;
+      color: #6b7c93;
+    }
+    a {
+      color: #4a90e2;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: #357ab8;
+      text-decoration: underline;
+    }
+    .error {
+      color: #e74c3c;
+      background: #fdecea;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+      padding: 8px 12px;
+      margin-top: 12px;
+      text-align: center;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='bccl_logo.jpg') }}" alt="BCCL Logo">
+    </div>
+    <h2>Login to Your Account</h2>
+    <form method="POST">
+      <input type="text" name="username" placeholder="Username" required autocomplete="username">
+      <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+  </div>
+</body>
+</html>

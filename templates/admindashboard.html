@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><title>Admin Dashboard</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body><div class="container">
+  <h2>Admin Panel - Pending Leaves</h2>
+  <table>
+    <tr><th>Employee</th><th>From</th><th>To</th><th>Type</th><th>Reason</th><th>Action</th></tr>
+    {% for lr in pending %}
+    <tr>
+      <td>{{ lr.username }}</td><td>{{ lr.from_date }}</td><td>{{ lr.to_date }}</td>
+      <td>{{ lr.leave_type }}</td><td>{{ lr.reason }}</td>
+      <td>
+        <a href="{{ url_for('approve', id=lr.id) }}"><button>Approve</button></a>
+        <a href="{{ url_for('reject', id=lr.id) }}"><button>Reject</button></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p><a href="{{ url_for('logout') }}">Logout</a></p>
+</div></body></html>
