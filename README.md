@@ -1,7 +1,7 @@
 # 🏢 Employee Leave Management System
 
-A sleek and efficient leave management system built for government sector needs — where leave requests don’t get *lost in the void* 😤  
-Built with ❤️ using **Flask**, **HTML/CSS**, and **SQL Server**.
+A sleek and efficient leave management system built as a Govt sector project 
+Built with using **Flask**, **HTML/CSS**, and **SQL Server**.
 
 ---
 
