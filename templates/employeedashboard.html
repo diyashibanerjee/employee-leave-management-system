@@ -3,10 +3,49 @@
 <head>
   <title>Employee Dashboard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .leave-balance {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      background: #f7f9fb;
+      padding: 14px 18px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.05);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .leave-balance span {
+      margin-right: 18px;
+    }
+    .leave-balance .casual { color: #1976d2; }
+    .leave-balance .sick { color: #e67e22; }
+    .leave-balance .earned { color: #27ae60; }
+  </style>
 </head>
 <body>
   <div class="container">
     <h2>Welcome, {{ username }}</h2>
+    <!-- Leave Balance Section (UI only, not from DB) -->
+    {% set casual_taken = 0 %}
+{% set sick_taken = 0 %}
+{% set earned_taken = 0 %}
+{% for lr in leaves %}
+  {% if lr.status== 'Approved' %}
+    {% if lr['leave_type'] == 'Casual' %}
+      {% set casual_taken = casual_taken + 1 %}
+    {% elif lr['leave_type'] == 'Sick' %}
+      {% set sick_taken = sick_taken + 1 %}
+    {% elif lr['leave_type'] == 'Earned' %}
+      {% set earned_taken = earned_taken + 1 %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+    <div class="leave-balance">
+      <span class="casual">Casual: {{ casual_taken }}/10</span>
+      <span class="sick">Sick: {{ sick_taken }}/10</span>
+      <span class="earned">Earned: {{ earned_taken }}/5</span>
+    </div>
     <form method="POST">
       <h3>Submit Leave</h3>
       <label>From</label>
