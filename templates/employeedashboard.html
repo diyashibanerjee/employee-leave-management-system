@@ -26,26 +26,28 @@
 <body>
   <div class="container">
     <h2>Welcome, {{ username }}</h2>
-    <!-- Leave Balance Section (UI only, not from DB) -->
-    {% set casual_taken = 0 %}
-{% set sick_taken = 0 %}
-{% set earned_taken = 0 %}
-{% for lr in leaves %}
-  {% if lr.status== 'Approved' %}
-    {% if lr['leave_type'] == 'Casual' %}
-      {% set casual_taken = casual_taken + 1 %}
-    {% elif lr['leave_type'] == 'Sick' %}
-      {% set sick_taken = sick_taken + 1 %}
-    {% elif lr['leave_type'] == 'Earned' %}
-      {% set earned_taken = earned_taken + 1 %}
-    {% endif %}
-  {% endif %}
-{% endfor %}
+
+    <!-- Updated Leave Balance Calculation -->
+    {% set ns = namespace(casual=0, sick=0, earned=0) %}
+    {% for lr in leaves %}
+      {% if lr.status == 'Approved' %}
+        {% if lr.leave_type == 'Casual' %}
+          {% set ns.casual = ns.casual + 1 %}
+        {% elif lr.leave_type == 'Sick' %}
+          {% set ns.sick = ns.sick + 1 %}
+        {% elif lr.leave_type == 'Earned' %}
+          {% set ns.earned = ns.earned + 1 %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
     <div class="leave-balance">
-      <span class="casual">Casual: {{ casual_taken }}/10</span>
-      <span class="sick">Sick: {{ sick_taken }}/10</span>
-      <span class="earned">Earned: {{ earned_taken }}/5</span>
+      <span class="casual">Casual: {{ ns.casual }}/10</span>
+      <span class="sick">Sick: {{ ns.sick }}/10</span>
+      <span class="earned">Earned: {{ ns.earned }}/5</span>
     </div>
+
+    <!-- Leave Submission Form -->
     <form method="POST">
       <h3>Submit Leave</h3>
       <label>From</label>
@@ -63,6 +65,8 @@
       </select>
       <button type="submit">Submit Leave</button>
     </form>
+
+    <!-- Leave History Table -->
     <h3>Your Leave History</h3>
     <table>
       <tr>
@@ -82,6 +86,7 @@
       </tr>
       {% endfor %}
     </table>
+
     <p><a href="{{ url_for('logout') }}">Logout</a></p>
   </div>
 </body>
